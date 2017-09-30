@@ -1,0 +1,19 @@
+notifications:
+  email:
+    recipients:
+      - rich@flatcap.org
+    on_success: change
+    on_failure: always
+
+sudo: false
+dist: trusty
+
+language: c
+compiler: gcc
+
+script:
+  - make DESTDIR=~/install install
+  - make DESTDIR=~/install uninstall
+    # Fail if any files are left behind
+  - find ~/install -type f; FILES=$(find ~/install -type f); [ -z "$FILES" ]
+
